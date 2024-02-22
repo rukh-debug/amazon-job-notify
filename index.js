@@ -24,7 +24,7 @@ async function sendEmailNotification() {
 
   // Compose email content
   let mailOptions = {
-    from: "notification@rubenk.com.np",
+    from: process.env.SEND_FROM_MAIL,
     to: emailList.join(", "),
     subject: "Changes Detected on Webpage",
     text: `Changes detected on the webpage [TEST MAIL]`,
