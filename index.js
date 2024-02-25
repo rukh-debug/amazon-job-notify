@@ -3,11 +3,11 @@ const nodemailer = require("nodemailer");
 const player = require("play-sound")((opts = {}));
 const path = require("path");
 
+require("dotenv").config();
 
-require('dotenv').config()
+console.log(`These emails will be notified ${process.env.EMAILS_TO_NOTIFY}`);
 
 const emailList = process.env.EMAILS_TO_NOTIFY.split(",");
-
 
 // Function to send email notification
 async function sendEmailNotification() {
@@ -27,8 +27,8 @@ async function sendEmailNotification() {
     from: process.env.SEND_FROM_MAIL,
     to: emailList.join(", "),
     subject: "Changes Detected on Webpage",
-    text: `Changes detected on the webpage [TEST MAIL]`,
-    html: `Change detected on webpage, please find the file attached for screenshot of the webpage`,
+    text: `Change detected on webpage, please find the file attached for screenshot of the webpage. THIS MIGHT ALSO BE FALSE POSITIVE`,
+    html: `Change detected on webpage, please find the file attached for screenshot of the webpage. THIS MIGHT ALSO BE FALSE POSITIVE`,
     attachments: [
       {
         filename: `screenshot.png`,
@@ -45,7 +45,7 @@ async function sendEmailNotification() {
 async function monitorWebpageChanges(url) {
   try {
     const browser = await puppeteer.launch({
-      headless: false, // Launch browser with headful mode
+      headless: true, // Launch browser with headful mode
       args: ["--disable-notifications"], // Disable notifications
     });
 
@@ -90,7 +90,7 @@ async function monitorWebpageChanges(url) {
     console.log("Waiting for location suggestions to load...");
     await new Promise((resolve) => setTimeout(resolve, 10000));
     let firstSuggestion = await page.evaluate(
-      () => document.getElementById("0").textContent
+      () => document.getElementById("0").textContent,
     );
     el = await page.waitForSelector(`text/${firstSuggestion}`);
     await el?.click();
@@ -120,7 +120,7 @@ async function monitorWebpageChanges(url) {
       try {
         await page.reload();
         el = await page.$(
-          "text/Sorry, there are no jobs available that match your search."
+          "text/Sorry, there are no jobs available that match your search.",
         );
 
         if (!el) {
