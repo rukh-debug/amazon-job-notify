@@ -27,8 +27,8 @@ async function sendEmailNotification() {
     from: process.env.SEND_FROM_MAIL,
     to: emailList.join(", "),
     subject: "Changes Detected on Webpage",
-    text: `Change detected on webpage, please find the file attached for screenshot of the webpage. THIS MIGHT ALSO BE FALSE POSITIVE`,
-    html: `Change detected on webpage, please find the file attached for screenshot of the webpage. THIS MIGHT ALSO BE FALSE POSITIVE`,
+    text: `Change detected on webpage, please find the file attached for screenshot of the webpage. THIS MIGHT ALSO BE FALSE POSITIVE Visit: https://hiring.amazon.ca/app#/jobSearch`,
+    html: `Change detected on webpage, please find the file attached for screenshot of the webpage. THIS MIGHT ALSO BE FALSE POSITIVE <br> Visit: https://hiring.amazon.ca/app#/jobSearch`,
     attachments: [
       {
         filename: `screenshot.png`,
