@@ -12,4 +12,6 @@ while true; do
 
   # Kill the npm run start process using the stored PID
   kill $pid
+
+  sleep 20
 done
